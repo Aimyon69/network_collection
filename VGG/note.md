@@ -63,7 +63,7 @@ $$
 
 - ***动量（Momentum）：***动量的引入会引起模型参数更新会依赖之前参数更新方向，这是一种对**之前经验的信任**，这种信任会让模型不会在局部最优值附近震荡，让其跳出局部最优值，朝着全局最优值收敛。即使不存在局部最优的情况，动量也会使得模型在同一梯度下降方向收敛得更快。
 
-- ***权重衰减（Weight Decay）：***$$Loss_{total} = Loss_{data} + \lambda \sum w^2$$权重衰减的本质就是在损失函数中添加一项权重平方和的惩罚项，其中的$\lambda$就是惩罚系数，论文中提到其值为5e^-4^，在参数更新求偏导的时候，会让权重去减去一项系数，具体的公式为：$w_{new} = w_{old} - \text{学习率} \times (\text{梯度} + \lambda w_{old})$​，使得新权重的绝对值变小。让权重的绝对值变小的目的是为了减小因为网络输入值的微小变化，但由于网络层的权重值过大，导致输出值波动较大，模型难以收敛且精度低的问题。
+- ***权重衰减（Weight Decay）：***$$Loss_{total} = Loss_{data} + \lambda \sum w^2$$权重衰减的本质就是在损失函数中添加一项权重平方和的惩罚项，其中的$\lambda$就是惩罚系数，论文中提到其值为5e^-4^，在参数更新求偏导的时候，会让权重去减去一项系数，具体的公式为：$w_{new} = w_{old} - \text{学习率} \times (\text{梯度} + \lambda w_{old})$​，使得新权重的绝对值变小。让权重的绝对值变小的目的是为了减小因为网络输入值的微小变化，但由于网络层的权重值过大，导致输出值波动较大，模型难以收敛且精度低的问题。且大权重的卷积核的存在会使得小权重卷积核的“失活”，让网络的推理结果由大卷积核主导，推理过度依赖少数特征（主导特征），网络失去特征多样性。
 
 - ***神经元随机失活（Dropout）：***这是一种防止模型过拟合的很好的正则化方法，而且这种方法会使模型训练的时候参数量减小，计算更快，模型收敛更快。本质就是在**正向传播（Forward Propagation）**和**反向传播（Backward Propagation）**过程中将某些神经元暂时“移除”（逻辑上的移除），使其不参与正向传播的输出值计算和反向传播的梯度计算和参数更新。神经元失活的比例由dropout ratio决定，论文中设置的是0.5，将此方法运用在了**Fully Connected Layers（全连接层）**。这个方法使得模型的输出值不过度依赖于特定的神经元，模型能学到更加普遍的特征，避免了过拟合。
 
@@ -224,12 +224,12 @@ class VGG(nn.Module):
                 nn.init.kaiming_normal_(m.weight,mode='fan_out',nonlinearity='relu')
                 if m.bias is not None:
                     nn.init.constant_(m.bias,0)
-                elif isinstance(m,nn.BatchNorm2d):
-                    nn.init.constant_(m.weight,1)
-                    nn.init.constant_(m.bias,0)
-                elif isinstance(m,nn.Linear):
-                    nn.init.normal_(m.weight,0,0.01)
-                    nn.init.constant_(m.bias,0)
+            elif isinstance(m,nn.BatchNorm2d):
+                nn.init.constant_(m.weight,1)
+                nn.init.constant_(m.bias,0)
+            elif isinstance(m,nn.Linear):
+                nn.init.normal_(m.weight,0,0.01)
+                nn.init.constant_(m.bias,0)
 
 def make_layers(cfg: List[Union[str,int]],batch_norm: bool = False) -> nn.Sequential:
     layers: List[nn.Module] = []
