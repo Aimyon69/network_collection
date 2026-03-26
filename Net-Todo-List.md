@@ -2,7 +2,8 @@
 
 - [ ] ResNet
 - [ ] R-CNN（Rol-Pooling）
-- [ ] MobileNet
+- [ ] MobileNet V1 and V2
 - [ ] batchnorm (no bias)
 - [ ] FPN
 - [ ] SSH
+- [ ] L1 和 L2 正则化
