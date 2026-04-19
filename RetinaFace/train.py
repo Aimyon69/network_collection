@@ -5,10 +5,10 @@ import torch.backends.cudnn as cudnn
 from torch.utils.data import DataLoader
 import cv2
 from data import preproc,WiderFaceDataset, detection_collate
-from model import RetinaFace
-from layers import MultiBoxLoss
-from layers import PriorBox
-from model import cfg_mnet
+from .model import RetinaFace
+from .layers import MultiBoxLoss
+from .layers import PriorBox
+from .model import cfg_mnet
 
 def train():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

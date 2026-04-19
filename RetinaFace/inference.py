@@ -1,10 +1,10 @@
 import torch
-import model
+from . import model
 import cv2
 import numpy as np
-import layers
+from . import layers
 import time
-import utils
+from . import utils
 import torchvision
 
 def inference():

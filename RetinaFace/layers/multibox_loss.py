@@ -1,8 +1,9 @@
 import torch
 import torch.nn as nn
 from typing import List
-from utils import match
+from ..utils import match
 import torch.nn.functional as F
+
 
 class MultiBoxLoss(nn.Module):
     def __init__(

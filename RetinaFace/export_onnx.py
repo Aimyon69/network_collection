@@ -1,5 +1,5 @@
 import torch
-import model
+from . import model
 
 def export_onnx():
     torch.set_grad_enabled(False)
