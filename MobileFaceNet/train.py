@@ -1,6 +1,6 @@
 import torch.utils.data as data
 from data import CASIAFace
-import model
+from . import model
 import torch
 import torch.optim as optim
 import torch.nn as nn

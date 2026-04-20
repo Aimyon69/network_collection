@@ -1,7 +1,6 @@
 import numpy as np
-import torch
 import random
-from utils import matrix_iof
+from ..utils import matrix_iof
 import cv2
 
 def _crop(
